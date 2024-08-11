@@ -29,12 +29,18 @@ const UserSchema = new mongoose.Schema({
 
 export const userModel =  mongoose.model("user" , UserSchema)
 
-// //Read
-// export const getUsers = () => userModel.find();
-// export const getUserByEmail = (email : string) => userModel.findOne({email})
-// export const getUserBySessionToken = (sessionToken : string) => userModel.findOne({
-//   'authentication.sessionToken' : sessionToken
-// })
-// export const getUserById = (id : string) => userModel.findById({id})
 
-// export const createUser = (values : Record<string , any>) => new userModel(values).save().then((user)=> user.toObject())
+/* READ */
+export const getUsers = () => userModel.find();
+export const getUserByEmail = (email : string) => userModel.findOne({email})
+export const getUserBySessionToken = (sessionToken : string) => userModel.findOne({
+  'authentication.sessionToken' : sessionToken
+})
+export const getUserById = (id : string) => userModel.findById({id})
+
+/*Create*/
+export const createUser = (values : Record<string , any>) => new userModel(values).save().then((user)=> user.toObject())
+
+
+/*UPDATE*/
+export const deleteUserByID = (id : string ) => userModel.findOneAndDelete
