@@ -6,15 +6,18 @@ import compression from "compression";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import path from "path";
 
-dotenv.config();
+dotenv.config({
+  path : path.resolve(__dirname , "../.env")
+});
 
 const PORT = process.env.PORT || 3000;
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/restAPI-TS";
 
 const app = express();
 
-const mongoDBConnection = mongoose.connect(MONGO_URL);
+const mongoDBConnection = mongoose.connect("mongodb://localhost:27017/");
 
 mongoDBConnection
   .then(() => console.log("Mongo DB connected"))

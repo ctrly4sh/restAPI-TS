@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-const SECRET = process.env.SECRET || "69"
+const SECRET = process.env.SECRET || "yash69"
 
 export const random = () => crypto.randomBytes(128).toString("base64");
 
