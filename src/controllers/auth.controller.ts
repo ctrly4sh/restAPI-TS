@@ -1,6 +1,6 @@
 import express from "express";
-import { getUserByEmail } from "..\\models\\models.users";
-import { random } from "helpers/auth.helper";
+import { createUser, getUserByEmail } from "..\\models\\models.users";
+import { authentication, random } from "helpers/auth.helper";
 
 export const resgiter = async (req: express.Request, res: express.Response) => {
   try {
@@ -10,11 +10,24 @@ export const resgiter = async (req: express.Request, res: express.Response) => {
       return res.sendStatus(400);
     }
 
-    const existingUser = getUserByEmail(email);
+    const existingUser = await getUserByEmail(email);
 
     if(existingUser){
         return res.sendStatus(400);
     }
+    
+    const salt = random();
+    
+    const user = await createUser({
+      email,
+      userame,
+      authentication : {
+        salt,
+        password : authentication(salt,password),  
+      }
+    })
+    
+    return res.status(200)
 
   } catch (error) {
     console.log("Error occurred : " + error);
