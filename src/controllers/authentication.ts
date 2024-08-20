@@ -1,8 +1,8 @@
 import express from "express";
-import { createUser, getUserByEmail } from "..\\models\\models.users";
-import { authentication, random } from "helpers/auth.helper";
+import { createUser , getUserByEmail } from "models/users";
+import { authentication, random } from "helpers/index";
 
-export const resgiter = async (req: express.Request, res: express.Response) => {
+export const register = async (req: express.Request, res: express.Response) => {
   try {
     const { email, password, userame } = req.body;
 

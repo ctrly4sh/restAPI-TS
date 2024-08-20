@@ -30,7 +30,7 @@ export const userModel = mongoose.model("user", UserSchema);
 
 export const createUser = (values: Record<string, any>) =>
   new userModel(values).save().then((user) => user.toObject());
-
+ 
 export const getUsers = () => userModel.find();
 
 export const getUserByEmail = (email: string) => userModel.findOne({ email });
