@@ -7,11 +7,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "path";
-import router from "router";
+import router from "./router/index";
 
 dotenv.config({
   path : path.resolve(__dirname , "../.env")
-});``
+});
 
 const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/restAPI-TS";
@@ -39,5 +39,4 @@ const server = http.createServer(app);
 server.listen(PORT, () => {
   console.log(`Server started at https://localhost:${PORT}`);
 });
-
 app.use('/', router());
