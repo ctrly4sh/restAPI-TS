@@ -47,16 +47,27 @@ export const login = async (req : express.Request , res : express.Response) => {
     if(!email || !password){
       return res.status(400)
     }
-
+              
     const user = await getUserByEmail(email).select("+authentication.salt +authentication.password")
 
     if(!user){
       res.sendStatus(400)
     }
+    
+    // else{
+    //   return res.json({
+    //     message : "User login successfully"
+    //   })
+    // }
+   
 
     const expectedUserHashedPassword = authentication(user.authentication.salt , password) 
 
-    const salt = random()
+    if(user.authentication.password !== expectedUserHashedPassword){ 
+      return res.sendStatus(403)
+    }
+
+    const salt = random()         
 
     user.authentication.sessionToken = authentication(salt , user._id.toString())
 
@@ -66,15 +77,13 @@ export const login = async (req : express.Request , res : express.Response) => {
 
     res.status(200).json(user).end();
 
-    if(user.authentication.password !== expectedUserHashedPassword){
-      
-    }
+    return res.json({
+      message : `you log in as ${user.username} successfully` 
+    })
 
   } catch (exe) {
-    res.json({
-      error: exe,
-    });
-
-    res.sendStatus(400)
+    return res.status(400).json({
+      message : "Error occurred while log in in , kindly check the credentials !"
+    })
   }
 };
