@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
     },
     sessionToken: {
       type: String,
-      Select: false,
+      select: false,
     },
   },
 });
@@ -46,3 +46,7 @@ export const updateUserByID = (id: string, values: Record<string, any>) =>
 
 export const deleteUserByID = (id: string) =>
   userModel.findOneAndDelete({ _id: id });
+
+export const deleteUserByEmail = ((email : string) => {
+  userModel.findOneAndDelete({email : email})
+})

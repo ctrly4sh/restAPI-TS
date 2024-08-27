@@ -1,8 +1,9 @@
 import express, { Router } from "express";
 import http from "http";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import compression from "compression";
+// import compression from "compression";
+import helmet from "helmet"
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -14,11 +15,11 @@ dotenv.config({
 });
 
 const PORT = process.env.PORT || 3000;
-const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/restAPI-TS";
+const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/restAPI";
+  
+const app = express();  
 
-const app = express();
-
-const mongoDBConnection = mongoose.connect("mongodb://localhost:27017/");
+const mongoDBConnection = mongoose.connect("mongodb://localhost:27017/restAPI");
 
 mongoDBConnection
   .then(() => console.log("Mongo DB connected"))
@@ -30,14 +31,17 @@ app.use(
   })
 );
 
-app.use(compression());
+// app.use(compression());
+app.use(helmet());
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.json());
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
-server.listen(PORT, () => {
+app.use('/', router());
+
+app.listen(PORT, () => {
   console.log(`Server started at https://localhost:${PORT}`);
 });
-app.use('/', router());
+
 

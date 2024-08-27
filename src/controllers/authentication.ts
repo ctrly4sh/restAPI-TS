@@ -71,15 +71,17 @@ export const login = async (req : express.Request , res : express.Response) => {
 
     user.authentication.sessionToken = authentication(salt , user._id.toString())
 
-    await user.save();
+    await user.save({
+      validateBeforeSave : false
+    });
 
-    res.cookie("Y4SH-AUTH" , user.authentication.sessionToken , {domain : 'localhost' , path : "/"})
-
-    res.status(200).json(user).end();
+    res.cookie("Y4SH-AUTH", user.authentication.sessionToken, { domain: 'localhost', path: "/" });
 
     return res.json({
-      message : `you log in as ${user.username} successfully` 
+      message: `you log in as ${user.username} successfully`
     })
+    
+    console.log("hello")
 
   } catch (exe) {
     return res.status(400).json({
