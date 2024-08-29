@@ -41,12 +41,8 @@ export const getUserBySessionToken = (sessionToken: string) =>
   });
 export const getUserById = (id: string) => userModel.findById({ id });
 
-export const updateUserByID = (id: string, values: Record<string, any>) =>
-  userModel.findByIdAndUpdate({ id, values });
+export const updateUserByID = (id: string, values: Record<string, any>) => userModel.findByIdAndUpdate({ id, values });
 
-export const deleteUserByID = (id: string) =>
-  userModel.findOneAndDelete({ _id: id });
+export const deleteUserByID = (id: string) =>userModel.findOneAndDelete({ _id: id });
 
-export const deleteUserByEmail = ((email : string) => {
-  userModel.findOneAndDelete({email : email})
-})
+export const deleteUserByEmail = (email : string) => userModel.findOneAndDelete({email : email})

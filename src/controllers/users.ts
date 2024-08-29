@@ -3,7 +3,7 @@ import express from "express"
 // import { getUsers } from "./../models/users"
 // import {userModel } from "./../models/users"
 
-import { deleteUserByID, userModel } from "./../models/users" 
+import { deleteUserByID, userModel , deleteUserByEmail } from "./../models/users" 
 
 export const getAllUsers = async (req : express.Request , res :express.Response) => {
     try{
@@ -21,6 +21,6 @@ export const getAllUsers = async (req : express.Request , res :express.Response)
 
 export const deleteUser = async (req : express.Request, res: express.Response) => {
   const { email } = req.params
-  const deletedUser = await deleteUserByID(email)
-  return res.json({ deleteUser })
+  const deletedUser = await deleteUserByEmail(email)
+  return res.json({ deletedUser })
 }

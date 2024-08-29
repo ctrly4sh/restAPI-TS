@@ -51,7 +51,7 @@ export const login = async (req : express.Request , res : express.Response) => {
     const user = await getUserByEmail(email).select("+authentication.salt +authentication.password")
 
     if(!user){
-      res.sendStatus(400)
+      return res.sendStatus(400)
     }
     
     // else{
@@ -64,7 +64,8 @@ export const login = async (req : express.Request , res : express.Response) => {
     const expectedUserHashedPassword = authentication(user.authentication.salt , password) 
 
     if(user.authentication.password !== expectedUserHashedPassword){ 
-      return res.sendStatus(403)
+      // return res.sendStatus(403)
+      return res.sendStatus(403) //forbidden
     }
 
     const salt = random()         
@@ -81,7 +82,7 @@ export const login = async (req : express.Request , res : express.Response) => {
       message: `you log in as ${user.username} successfully`
     })
     
-    console.log("hello")
+    // console.log("debug set header")
 
   } catch (exe) {
     return res.status(400).json({
